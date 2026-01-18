@@ -93,7 +93,7 @@ export const blogPosts: BlogPost[] = [
             </ul>
             <p>This drastically reduces load. A message sent to 20,000 users might only trigger 500 writes if only 500 users are active.</p>
 
-            <img src="/ZulipsMessagingFlow.png" alt="Zulip Messaging Architecture and Soft Deactivation Flow" style="width: 100%; border-radius: 8px; margin: 30px 0;" />
+            <img src="/Portfolio/ZulipsMessagingFlow.png" alt="Zulip Messaging Architecture and Soft Deactivation Flow" style="width: 100%; border-radius: 8px; margin: 30px 0;" />
 
             <h3>The Catch-Up Mechanism (The Backfill)</h3>
             <p>What happens when a soft-deactivated user finally returns? They have no UserMessage rows for the last six months.</p>
