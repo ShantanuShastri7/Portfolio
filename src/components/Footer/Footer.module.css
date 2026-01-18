@@ -1,0 +1,15 @@
+.footer {
+    padding: 30px 50px;
+    background-color: var(--background);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.text {
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+.highlight {
+    color: var(--foreground);
+}

@@ -1,0 +1,178 @@
+.education {
+    padding: 2rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #333);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    transition: all 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-primary, #3b82f6);
+}
+
+.icon {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    background: var(--accent-surface, rgba(59, 130, 246, 0.1));
+    color: var(--accent-primary, #3b82f6);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    flex: 1;
+}
+
+.degree {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary, #fff);
+}
+
+.school {
+    font-size: 1rem;
+    color: var(--text-secondary, #a1a1aa);
+    margin-bottom: 0.5rem;
+}
+
+.meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-tertiary, #71717a);
+    margin-bottom: 0.75rem;
+}
+
+.description {
+    font-size: 0.875rem;
+    color: var(--text-secondary, #a1a1aa);
+    line-height: 1.5;
+}
+
+.clickHint {
+    font-size: 0.75rem;
+    color: var(--accent-primary, #3b82f6);
+    margin-top: 1rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Modal specific styles */
+.modalHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #333);
+}
+
+.modalIcon {
+    color: var(--accent-primary, #3b82f6);
+}
+
+.modalTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary, #fff);
+    line-height: 1.2;
+}
+
+.modalSchool {
+    font-size: 1.125rem;
+    color: var(--text-secondary, #a1a1aa);
+}
+
+.modalBody {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.section h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary, #fff);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    padding: 0.375rem 0.875rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary, #e0e0e0);
+}
+
+.list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.list li {
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text-secondary, #cfcfcf);
+    line-height: 1.5;
+}
+
+.list li::before {
+    content: "•";
+    position: absolute;
+    left: 0.5rem;
+    color: var(--accent-primary, #3b82f6);
+}
+
+@media (max-width: 640px) {
+    .card {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}

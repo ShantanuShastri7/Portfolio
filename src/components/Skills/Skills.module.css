@@ -1,0 +1,115 @@
+.skills {
+    padding: 100px 50px;
+    background-color: #000;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #fff;
+}
+
+
+
+.categorySection {
+    margin-bottom: 80px;
+}
+
+.categoryTitle {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 500;
+}
+
+.dashLine {
+    width: 20px;
+    height: 2px;
+    background: #444;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    height: 100px;
+    background: #000;
+    border: 1px solid #222;
+    border-radius: 15px;
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    border-color: #555;
+    transform: translateY(-2px);
+}
+
+.skillName {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #eee;
+    z-index: 10;
+}
+
+/* Color Variants for Programming Languages */
+.yellow {
+    background: linear-gradient(90deg, #111, #1a1a1a);
+}
+
+.blue {
+    background: linear-gradient(90deg, #0a0a0a, #111);
+}
+
+/* Background Icons / Shapes (Abstract CSS Art) */
+.backgroundIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    opacity: 0.8;
+    mask-image: linear-gradient(to left, black, transparent);
+}
+
+/* Specific icon shapes using pseudo-elements or multiple backgrounds */
+.neural {
+    background: radial-gradient(circle at 50% 50%, #fff 2px, transparent 2px);
+    background-size: 20px 20px;
+}
+
+.java::after {
+    content: '☕';
+    font-size: 50px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.python::after {
+    content: '🐍';
+    font-size: 50px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
