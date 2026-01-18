@@ -40,7 +40,7 @@ export default function Hero() {
                 <div className={styles.visual}>
                     <div className={styles.imageWrapper}>
                         <Image
-                            src="/profile.png"
+                            src="/Portfolio/profile.png"
                             alt="Shantanu Shastri"
                             fill
                             className={styles.profileImage}
