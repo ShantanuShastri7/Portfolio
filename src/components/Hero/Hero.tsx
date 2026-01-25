@@ -1,16 +1,50 @@
+"use client";
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Github, Linkedin, Mail, FileText, Send } from 'lucide-react';
 import Image from 'next/image';
 import styles from './Hero.module.css';
 
+const ROLES = [
+    "Software Engineer",
+    "AI Researcher",
+    "Distributed Systems enthusiast",
+    "Runner",
+    "Coffee enthusiast",
+    "Traveller"
+];
+
 export default function Hero() {
+    const [roleIndex, setRoleIndex] = useState(0);
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            // Start fade out
+            setIsVisible(false);
+
+            // Wait for fade out to complete, then change text and fade in
+            setTimeout(() => {
+                setRoleIndex((prevIndex) => (prevIndex + 1) % ROLES.length);
+                setIsVisible(true);
+            }, 500); // Matches CSS transition duration
+
+        }, 3000); // Change every 3 seconds
+
+        return () => clearInterval(intervalId);
+    }, []);
+
     return (
         <section className={styles.hero}>
             <div className={styles.container}>
                 <div className={styles.content}>
                     <span className={styles.greeting}>Hi, I am</span>
                     <h1 className={styles.name}>Shantanu Shastri,</h1>
-                    <h2 className={styles.title}>Software Engineer</h2>
+                    <h2 className={styles.title}>
+                        <span className={`${styles.rotatingText} ${!isVisible ? styles.hidden : ''}`}>
+                            {ROLES[roleIndex]}
+                        </span>
+                    </h2>
                     <p className={styles.description}>
                         Master&apos;s student at Carnegie Mellon University. Passionate about AI, distributed systems, and building technology that scales.
                         I love solving complex problems and creating software that is both reliable and impactful.

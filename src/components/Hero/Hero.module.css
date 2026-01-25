@@ -47,6 +47,16 @@
     color: var(--secondary);
     margin-bottom: 30px;
     font-weight: 400;
+    min-height: 1.2em; /* Prevent layout shift */
+}
+
+.rotatingText {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+
+.rotatingText.hidden {
+    opacity: 0;
 }
 
 .description {
