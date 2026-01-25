@@ -1,9 +1,19 @@
 import Link from 'next/link';
-import { Github } from 'lucide-react';
+import { Github, ExternalLink } from 'lucide-react';
 import styles from './Projects.module.css';
 import { getTechData } from '../../utils/icons';
 
 const projects = [
+    {
+        title: 'Magic Wand ML',
+        subtitle: 'Edge AI (No Frameworks)',
+        duration: 'Jan 2026',
+        description: 'End-to-end MLOps pipeline: Custom Python Training -> JSON Bridge -> Pure JavaScript Edge Inference. Runs directly in browser.',
+        tags: ['Python', 'JavaScript', 'NumPy', 'Deep Learning', 'MLOps', 'Edge AI'],
+        github: 'https://github.com/ShantanuShastri7/MultiLayerPerceptronBasedMagicWand',
+        demo: 'https://shantanushastri7.github.io/MultiLayerPerceptronBasedMagicWand/web_app/index.html',
+        dates: { start: 'Jan 2026', end: 'Present' }
+    },
     {
         title: 'Seizure Identification',
         subtitle: 'Healthcare AI',
@@ -70,9 +80,16 @@ export default function Projects() {
                                     <div className={styles.iconBox} style={{ color: mainIconColor }}>
                                         <MainIcon size={24} />
                                     </div>
-                                    <Link href={project.github} target="_blank" className={styles.linkIcon}>
-                                        <Github size={20} />
-                                    </Link>
+                                    <div className={styles.links}>
+                                        {project.demo && (
+                                            <Link href={project.demo} target="_blank" className={styles.linkIcon} title="Live Demo">
+                                                <ExternalLink size={20} />
+                                            </Link>
+                                        )}
+                                        <Link href={project.github} target="_blank" className={styles.linkIcon} title="GitHub Repo">
+                                            <Github size={20} />
+                                        </Link>
+                                    </div>
                                 </div>
 
                                 <h3 className={styles.projectTitle}>{project.title}</h3>
@@ -109,3 +126,4 @@ export default function Projects() {
         </section>
     );
 }
+
