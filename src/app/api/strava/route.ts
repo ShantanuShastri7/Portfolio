@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-static';
+
 const {
   STRAVA_CLIENT_ID: client_id,
   STRAVA_CLIENT_SECRET: client_secret,
