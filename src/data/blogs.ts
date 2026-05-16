@@ -10,6 +10,235 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
     {
+        slug: 'personal-running-coach-agent',
+        title: 'Building a Personal Running Coach Agent with MCP, Claude, and GCP',
+        date: 'May 16, 2026',
+        excerpt: 'I built a Telegram bot that reads my Strava history and Google Calendar to plan weekly runs. Behind the scenes: an agentic loop with Claude as the reasoning model, two MCP servers for tool access, and a fully serverless GCP stack that costs essentially nothing.',
+        githubUrl: 'https://github.com/ShantanuShastri7/personal-agent',
+        linkedinUrl: 'https://linkedin.com/in/shantanushastri',
+        content: `
+            <p>I type "plan my running for this week" into a Telegram conversation on my phone. Ten seconds later, the bot replies with a day-by-day schedule — easy 5K on Monday (I ran 60km last week and need recovery), rest on Wednesday (three back-to-back classes on my CMU calendar), long run Saturday morning before an 11am commitment. No separate app, no manual cross-referencing. That is the product: a personal AI running coach accessible from a Telegram chat.</p>
+
+            <p>This post walks through how the system is built — the architecture, the Model Context Protocol layer that connects Claude to Strava and Google Calendar, the engineering decisions that shaped the design, and the bugs that shaped the debugging skills.</p>
+
+            <h3>The Architecture</h3>
+
+            <p>The system is five components, all on GCP:</p>
+
+            <ul>
+                <li><strong>Telegram bot</strong> — the user interface. Messages sent to the bot trigger an HTTPS webhook to a Cloud Run service.</li>
+                <li><strong>Agent Service (Cloud Run)</strong> — a FastAPI server that receives the webhook, runs the full agentic loop (message → Claude → tool calls → Claude → reply), and sends the final response back to Telegram via the Bot API.</li>
+                <li><strong>Strava MCP Server (Cloud Run)</strong> — a separate FastMCP service that exposes Strava data as callable tools: recent runs, athlete statistics, profile information.</li>
+                <li><strong>Google Calendar MCP Server (Cloud Run)</strong> — exposes calendar tools: weekly events across both my personal and CMU calendars, free time windows on a given day, and a day-level busyness classification.</li>
+                <li><strong>GCP Firestore + Secret Manager</strong> — Firestore stores full conversation history per Telegram <code>chat_id</code>; Secret Manager stores all OAuth tokens and API keys, including Strava's access tokens which rotate every six hours.</li>
+            </ul>
+
+            <p>All three Cloud Run services use scale-to-zero. When I am not actively using the bot, nothing runs and nothing costs money.</p>
+
+            <h3>What Is MCP?</h3>
+
+            <p>MCP (Model Context Protocol) is an open standard from Anthropic that defines how AI agents connect to external tools and data sources. The premise is straightforward: instead of hardcoding API calls inside the agent, you build separate MCP servers that expose "tools," and the agent discovers those tools at runtime.</p>
+
+            <p>Without MCP, adding Strava integration means writing Strava API calls directly in the agent, handling auth inside the agent, and modifying the agent whenever the available data needs to change. The agent and the data source are coupled. With MCP, the Strava integration lives in its own service. The agent asks "what tools do you have?" on startup, gets back a list of tool schemas (name, description, parameter types), and passes them to Claude. Claude decides which tools to call based on the user's message. If I want to add a weather MCP server tomorrow, I deploy it and add it to the agent's server list — the agent code itself does not change.</p>
+
+            <p>Each MCP server in this project uses <strong>Streamable HTTP</strong> transport: the agent POSTs to an HTTP endpoint to initialise a session and invoke tools. In production these are Cloud Run URLs; locally they are <code>localhost:8001</code> and <code>localhost:8002</code>. The <code>mcp</code> Python SDK (Anthropic's official package) handles the protocol. I use <code>FastMCP</code> on the server side and <code>MultiServerMCPClient</code> on the agent side.</p>
+
+            <p>A tool definition on the Strava server looks like this:</p>
+
+            <pre><code>from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("strava-mcp")
+
+@mcp.tool()
+async def get_recent_runs(count: int = 5) -> list:
+    """Fetch the last N runs with distance, pace, and elevation gain."""
+    activities = strava_client.get_activities(limit=count)
+    return [
+        {
+            "name": a.name,
+            "distance_km": round(a.distance / 1000, 2),
+            "pace_min_per_km": format_pace(a.moving_time, a.distance),
+            "elevation_m": a.total_elevation_gain,
+            "date": a.start_date_local.isoformat(),
+        }
+        for a in activities if a.type == "Run"
+    ]</code></pre>
+
+            <p>The <code>@mcp.tool()</code> decorator is all it takes. FastMCP infers the input schema from the function signature and uses the docstring as the description that Claude reads when deciding whether to call the tool. The three MCP servers in the project expose nine tools in total: <code>get_recent_runs</code>, <code>get_athlete_stats</code>, and <code>get_athlete_profile</code> on Strava; <code>get_week_events</code>, <code>get_free_slots</code>, and <code>get_busy_days</code> on Google Calendar. Claude selects whichever subset is relevant to the question asked.</p>
+
+            <h3>The Agentic Loop</h3>
+
+            <p>When a Telegram message arrives, the agent service runs this loop:</p>
+
+            <ol>
+                <li>Load the full conversation history for this <code>chat_id</code> from Firestore.</li>
+                <li>Open connections to both MCP servers, fetch the combined tool list.</li>
+                <li>Send the message, conversation history, and tool schemas to Claude via the Anthropic API.</li>
+                <li>If Claude's response contains <code>tool_use</code> blocks, execute each tool via the MCP client and send the results back.</li>
+                <li>Repeat until Claude's <code>stop_reason</code> is <code>end_turn</code>.</li>
+                <li>Persist the updated history to Firestore. Send the reply to Telegram.</li>
+            </ol>
+
+            <pre><code>async def run_agent(user_message: str, history: list) -> str:
+    history.append({"role": "user", "content": user_message})
+
+    async with MultiServerMCPClient(MCP_SERVERS) as client:
+        tools = client.get_tools()
+
+        while True:
+            response = anthropic.messages.create(
+                model="claude-sonnet-4-6",
+                max_tokens=4096,
+                messages=history,
+                tools=tools,
+            )
+
+            if response.stop_reason == "end_turn":
+                reply = next(b.text for b in response.content if b.type == "text")
+                history.append({"role": "assistant", "content": reply})
+                return reply
+
+            # Execute tool calls, collect results
+            tool_results = []
+            for block in response.content:
+                if block.type == "tool_use":
+                    result = await client.call_tool(block.name, block.input)
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": str(result),
+                    })
+
+            history.append({"role": "assistant", "content": response.content})
+            history.append({"role": "user", "content": tool_results})</code></pre>
+
+            <p>A typical "plan my week" request triggers three to four tool calls: <code>get_recent_runs</code>, <code>get_athlete_stats</code>, <code>get_week_events</code>, and <code>get_busy_days</code>. Claude pulls the relevant context, reasons about training load and schedule constraints, and produces a structured plan in the final text response.</p>
+
+            <h3>Key Engineering Decisions</h3>
+
+            <h4>1. Webhooks Over Long Polling</h4>
+
+            <p>Telegram bots can receive messages two ways. <strong>Long polling</strong> — the bot repeatedly asks Telegram "any new messages?" — requires a persistent always-on process and cannot scale to zero. At Cloud Run minimum-instance pricing this costs roughly $7–10 per month. <strong>Webhooks</strong> have Telegram push messages to your URL only when they arrive, so the container spins up on-demand and scales back to zero when idle. For personal use the cost is effectively $0.</p>
+
+            <p>The tradeoff is cold starts. When Cloud Run has been idle, the first message after an idle period takes an extra 2–4 seconds while the container boots. Noticeable, but acceptable for a personal tool used casually.</p>
+
+            <h4>2. FastAPI Instead of PTB's Built-in Webhook</h4>
+
+            <p>This was the most frustrating issue to diagnose. <code>python-telegram-bot</code> has built-in webhook support via <code>Application.run_webhook()</code>. The problem: PTB manages its own async event loop internally, and the MCP client library uses <code>anyio</code> task groups to manage connections. When MCP context managers were torn down at the end of a message handler, <code>anyio</code> raised <code>RuntimeError: Attempted to exit cancel scope in a different task</code> — because teardown was happening in PTB's event loop, not the one <code>anyio</code> had created the scope in.</p>
+
+            <p>The fix: use FastAPI as the webhook server and run PTB in manual mode. Call <code>app.initialize()</code> and <code>app.start()</code> at startup via FastAPI's lifespan context, then call <code>app.process_update(update)</code> for each incoming request. PTB's dispatcher still routes updates to the correct handler — I just removed its lifecycle management and took control of the event loop.</p>
+
+            <h4>3. Per-Request MCP Connections</h4>
+
+            <p>The original design held MCP connections open for the lifetime of the Cloud Run container, similar to a database connection pool. This hit the same <code>anyio</code> cancel scope error when FastAPI's request lifecycle and the persistent MCP context manager ended up in different async task contexts.</p>
+
+            <p>The fix: open a fresh MCP connection at the start of each incoming message and close it when the agentic loop finishes. This adds roughly 100–200ms per message for connection setup. Given that total latency is already in the 3–8 second range (dominated by LLM inference), the overhead is not perceptible in practice.</p>
+
+            <h4>4. Firestore for Conversation History</h4>
+
+            <p>Cloud Run is stateless — when a container scales to zero, all in-memory state is lost. Without persistence, every cold start gives the bot a blank memory. Three options were considered:</p>
+
+            <ul>
+                <li><strong>In-memory only</strong> — simple, but the bot loses context on every cold start.</li>
+                <li><strong>Redis</strong> — fast, but adds another managed service and ongoing cost.</li>
+                <li><strong>Firestore</strong> — serverless, free tier (1 GB storage, 50K reads/day) comfortably covers personal use, native GCP integration.</li>
+            </ul>
+
+            <p>Firestore stores the full conversation history — including <code>tool_use</code> and <code>tool_result</code> blocks from the Anthropic API — serialised as a JSON list in a document keyed by Telegram <code>chat_id</code>. It is loaded at the start of each request and overwritten at the end.</p>
+
+            <h4>5. Secret Manager for Runtime Token Updates</h4>
+
+            <p>Strava OAuth access tokens expire every six hours. The token refresh flow needs to persist the new token so the MCP server can use it on the next request. Cloud Run environment variables are set at deploy time and are immutable at runtime, so they cannot store a rotating token.</p>
+
+            <p>GCP Secret Manager solves this: on each token refresh the code adds a new secret version, and the MCP server reads the latest version on the next request. Locally, the same abstraction writes to a <code>.env</code> file. The environment is detected via Cloud Run's <code>K_SERVICE</code> environment variable:</p>
+
+            <pre><code>def get_secret(name: str) -> str:
+    if os.getenv("K_SERVICE"):          # Cloud Run
+        client = secretmanager.SecretManagerServiceClient()
+        path = f"projects/{PROJECT_ID}/secrets/{name}/versions/latest"
+        return client.access_secret_version(name=path).payload.data.decode()
+    load_dotenv()
+    return os.environ[name]             # Local
+
+def set_secret(name: str, value: str) -> None:
+    if os.getenv("K_SERVICE"):          # Cloud Run
+        parent = f"projects/{PROJECT_ID}/secrets/{name}"
+        client = secretmanager.SecretManagerServiceClient()
+        client.add_secret_version(parent=parent, payload={"data": value.encode()})
+    else:                               # Local
+        _update_dotenv(name, value)</code></pre>
+
+            <h4>6. Two Calendars, One OAuth Flow</h4>
+
+            <p>Two calendars matter for scheduling: personal Gmail and CMU Google Workspace. The simplest solution: share the CMU calendar to my personal Gmail via Google Calendar's native sharing feature. Both calendars then appear under the same Google account, so a single OAuth session and a single API call retrieves events from both. No separate credentials, no second token refresh cycle.</p>
+
+            <h4>7. The Docker Platform Flag</h4>
+
+            <p>Development is on an Apple Silicon Mac (ARM64). Cloud Run runs AMD64. Without specifying the platform at build time, Docker produces a native ARM64 image that fails immediately on Cloud Run with <code>exec format error</code>. The fix is one flag:</p>
+
+            <pre><code>docker build --platform=linux/amd64 -t gcr.io/PROJECT/service-name .</code></pre>
+
+            <p>Easy to forget on the first deploy from an M-series machine, and the error message is not particularly descriptive about the cause.</p>
+
+            <h3>Things That Broke</h3>
+
+            <p><strong>credentials.json committed to git.</strong> The Google OAuth credentials file was accidentally included in a commit. GitHub's secret scanning detected it and blocked the push. The fix used <code>git filter-repo</code> to scrub the file from the full commit history, followed by a force-push to clean the remote. OAuth credentials were rotated immediately after. Lesson: add <code>credentials.json</code> and <code>token.json</code> to <code>.gitignore</code> before writing a single line of code.</p>
+
+            <p><strong>secrets.py shadowed the standard library.</strong> The secret abstraction module was named <code>secrets.py</code>. Python's standard library has a module with the same name. Starlette — used internally by FastMCP — imports <code>from secrets import token_hex</code> at startup. With my file present, it found my module instead, got no <code>token_hex</code>, and raised an <code>ImportError</code> on every Cloud Run container startup. The fix: rename the file to <code>gcp_secrets.py</code>.</p>
+
+            <p><strong>Webhook deleted on container shutdown.</strong> A FastAPI lifespan shutdown handler called <code>bot.delete_webhook()</code> for cleanup. Every time Cloud Run scaled the container to zero — which happens frequently in scale-to-zero mode — the webhook registration was deleted from Telegram's servers. Messages sent while the container was scaled down were silently dropped. The fix: remove the <code>delete_webhook()</code> call. The webhook registration lives on Telegram's infrastructure independently of whether the container is running.</p>
+
+            <h3>What It Costs</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Monthly Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GCP Cloud Run (3 services)</td>
+                        <td>$0 (free tier: 2M requests/month)</td>
+                    </tr>
+                    <tr>
+                        <td>GCP Secret Manager</td>
+                        <td>$0 (free tier: 6 secret versions)</td>
+                    </tr>
+                    <tr>
+                        <td>GCP Firestore</td>
+                        <td>$0 (free tier: 1 GB storage, 50K reads/day)</td>
+                    </tr>
+                    <tr>
+                        <td>Telegram Bot API</td>
+                        <td>$0 (always free)</td>
+                    </tr>
+                    <tr>
+                        <td>Claude API (claude-sonnet-4-6)</td>
+                        <td>~$1–3/month (~5–10 messages/day)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>The only real cost is the Claude API. At roughly five to ten messages a day the monthly bill has not exceeded $3. The entire GCP infrastructure sits comfortably within the free tier.</p>
+
+            <h3>What's Next</h3>
+
+            <p>The MCP architecture makes adding new capabilities straightforward: deploy a new server, add it to the agent's list, and Claude gains access to the new tools with no changes to the agent code. Planned additions:</p>
+
+            <ul>
+                <li><strong>Weather MCP server</strong> — factor in forecast conditions when scheduling outdoor runs.</li>
+                <li><strong>Route suggestions</strong> — a tool that takes a target distance and returns route options using Strava segment data or OpenStreetMap.</li>
+                <li><strong>Multi-week plan persistence</strong> — store structured training plans in Firestore so the bot tracks progress across a full training block, not just a single week.</li>
+            </ul>
+
+            <p>Two things I would change if starting over: use <code>stdio</code> MCP transport locally rather than HTTP (this sidesteps the <code>anyio</code> task group issue entirely, since <code>stdio</code> does not use them), and add Cloud Run IAM invocation authentication to the MCP server endpoints. Currently the MCP servers are deployed with <code>--allow-unauthenticated</code>, meaning anyone who discovers the URL can call the Strava and Calendar tools directly. Cloud Run's built-in IAM token verification would fix this with minimal changes.</p>
+
+            <p>The full source is on GitHub. The project is something I actively use — which, for a personal project, is the most honest measure of whether it was worth building.</p>
+        `
+    },
+    {
         slug: 'zulip-threading-architecture',
         title: 'The Heavy Cost of Threading: How Zulip Scales a "One Row Per Message" Architecture',
         date: 'Jan 18, 2026',

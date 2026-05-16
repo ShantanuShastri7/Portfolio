@@ -5,6 +5,15 @@ import { getTechData } from '../../utils/icons';
 
 const projects = [
     {
+        title: 'Running Coach Agent',
+        subtitle: 'AI Agent / GCP Serverless',
+        duration: 'May 2026',
+        description: 'Personal AI running coach on Telegram. Integrates with Strava and Google Calendar via MCP to plan weekly schedules. Fully serverless on GCP Cloud Run with Claude as the reasoning model.',
+        tags: ['Python', 'FastAPI', 'Docker', 'GCP Cloud Run', 'MCP', 'Claude AI', 'Firestore'],
+        github: 'https://github.com/ShantanuShastri7/personal-agent',
+        dates: { start: 'Apr 2026', end: 'Present' }
+    },
+    {
         title: 'Magic Wand ML',
         subtitle: 'Edge AI (No Frameworks)',
         duration: 'Jan 2026',
