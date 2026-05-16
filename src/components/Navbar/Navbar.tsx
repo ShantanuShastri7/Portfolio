@@ -2,13 +2,13 @@ import Link from 'next/link';
 import styles from './Navbar.module.css';
 
 const navItems = [
-    { label: 'Skills', href: '#skills' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Education', href: '#education' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Blogs', href: '#blog' },
+    { label: 'Skills', href: '/#skills' },
+    { label: 'Experience', href: '/#experience' },
+    { label: 'Education', href: '/#education' },
+    { label: 'Projects', href: '/#projects' },
+    { label: 'Blogs', href: '/#blog' },
     { label: 'Resume', href: '/resume.pdf' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Contact', href: '/#contact' },
 ];
 
 export default function Navbar() {

@@ -10,21 +10,23 @@ const education = [
         school: 'Carnegie Mellon University',
         year: 'Expected Dec 2026',
         gpa: '3.85',
-        description: 'Focusing on distributed systems, machine learning, Artificial Intelligence, and software architecture.',
+        description: 'Focusing on AI, machine learning systems, distributed systems, and software architecture.',
         details: {
             courses: [
+                'Machine Learning in Production',
+                'LLM Applications',
+                'Generative AI Lab',
+                'Introduction to Deep Learning',
                 'Distributed Systems',
                 'Cloud Computing',
-                'Machine Learning in Production',
-                'Introduction to Deep Learning',
                 'Database Management Systems',
-                'Generative AI Lab',
-                'Object Oriented Programming in Java'
+                'Object Oriented Programming in Java',
             ],
             certifications: [],
             activities: [
                 'Graduate Teaching Assistant for Software Architectures (17-635)',
-                'Application programmer at Scotty Labs in CMU',
+                'Technology Consultant for Honeycomb Credit — A/B testing and UX strategy across 600+ users',
+                'Application Programmer at Scotty Labs, CMU',
                 'Member of CMU Data Science Club',
             ]
         }
