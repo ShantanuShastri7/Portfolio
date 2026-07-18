@@ -23,6 +23,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-family-sans);
   line-height: 1.6;
+  scroll-behavior: smooth;
 }
 
 a {
