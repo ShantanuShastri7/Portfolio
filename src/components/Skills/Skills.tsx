@@ -8,10 +8,10 @@ const skillCategories = [
         items: [
             { name: 'Deep Learning' },
             { name: 'RAG' },
-            { name: 'Prompt Engineering' },
-            { name: 'Hyper Parameter Tuning' },
+            { name: 'LangChain' },
+            { name: 'LlamaIndex' },
+            { name: 'Generative AI' },
             { name: 'Data Preprocessing' },
-            { name: 'Speech Recognition' },
             { name: 'Transformer Architecture' },
         ]
     },
@@ -22,17 +22,18 @@ const skillCategories = [
             { name: 'Python' },
             { name: 'TypeScript' },
             { name: 'C++' },
+            { name: 'GoLang' },
             { name: 'SQL' }
         ]
     },
     {
-        title: 'Libraries',
+        title: 'Libraries & Tools',
         items: [
             { name: 'Pandas' },
             { name: 'NumPy' },
             { name: 'Scikit-learn' },
-            { name: 'Keras' },
-            { name: 'OpenCV' },
+            { name: 'PyTorch' },
+            { name: 'Ray Data' },
             { name: 'Redux' }
         ]
     },
@@ -40,27 +41,28 @@ const skillCategories = [
         title: 'Frameworks',
         items: [
             { name: 'Spring Boot' },
+            { name: 'Next.js' },
             { name: 'Angular' },
-            { name: 'PyTorch' },
-            { name: 'TensorFlow' }
+            { name: 'FastAPI' },
+            { name: 'Node.js' }
         ]
     },
     {
         title: 'DevOps & Cloud',
         items: [
-            { name: 'Linux' },
+            { name: 'Docker' },
             { name: 'Kubernetes' },
             { name: 'AWS' },
             { name: 'Git' },
-            { name: 'GitHub Actions' }
+            { name: 'CI/CD' }
         ]
     },
     {
         title: 'Distributed Systems',
         items: [
             { name: 'Apache Kafka' },
-            { name: 'Apache Ignite' },
             { name: 'Zookeeper' },
+            { name: 'Apache Ignite' },
         ]
     },
     {
@@ -68,9 +70,9 @@ const skillCategories = [
         items: [
             { name: 'MySQL' },
             { name: 'PostgreSQL' },
-            { name: 'Apache Kafka' },
+            { name: 'Neo4j' },
+            { name: 'Milvus' },
             { name: 'Azure Blob' },
-            { name: 'Supabase' },
         ]
     },
     {

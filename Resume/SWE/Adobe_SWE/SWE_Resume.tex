@@ -1,0 +1,88 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries\uppercase}{}{0pt}{}[\titlerule]
+\titlespacing*{\section}{0pt}{6pt}{4pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    \Huge \textbf{Shantanu Shastri} \\
+    \vspace{2pt}
+    \small shantanushastri70@gmail.com $|$ (412) 608-7945 $|$ \href{https://linkedin.com/in/shantanushastri}{linkedin.com/in/shantanushastri}
+\end{center}
+
+\vspace{-5pt}
+\section{Education}
+\noindent
+\textbf{Carnegie Mellon University} \hfill December 2026 \\
+Master of Information Systems Management \hfill GPA: 3.85 \\
+\textbf{Manipal Institute of Technology} \hfill August 2022 \\
+Bachelor of Electronics and Communications Engineering \hfill GPA: 3.99 \\
+\textit{Relevant Coursework:} Data Structures, Algorithms, Distributed Systems, OOP, System Design
+
+\vspace{-5pt}
+\section{Skills}
+\noindent
+\textbf{Languages:} Java, Python, C++, TypeScript, JavaScript, SQL, Bash/Shell \\
+\textbf{Backend \& Architecture:} Spring Boot, RESTful APIs, Microservices, System Design, FastAPI, Node.js, ETL \\
+\textbf{Databases \& Caching:} PostgreSQL, MySQL, Redis, Ignite, NoSQL, Neo4j, Milvus, Sybase, MongoDB \\
+\textbf{Infrastructure \& DevOps:} Apache Kafka, Zookeeper, Docker, Kubernetes, Azure, AWS, CI/CD, JUnit, Prometheus
+
+\vspace{-5pt}
+\section{Experience}
+\noindent
+\textbf{BlackRock} \hfill January 2022 -- August 2026 \\
+\textit{AI Engineer Internship} \hfill June 2026 -- August 2026
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item \textbf{Massive Data Pipelines:} Built a fault-tolerant backend processing large-scale data using FastAPI, Neo4j, Milvus, PostgreSQL, and Kafka for real-time, stream-based knowledge graph ingestion.
+    \item \textbf{Vector-Graph Architecture:} Architected a hybrid system linking Milvus embeddings to Neo4j nodes via a PostgreSQL bridge, resolving data inconsistencies and enabling structured search under 100ms.
+    \item \textbf{RESTful API \& GenAI:} Engineered a generative AI platform backed by 10+ rate-limited RESTful APIs handling 2K+ peak RPS, advancing Straight-Through Processing toward 100\%.
+    \item \textbf{Evaluation \& Monitoring:} Created offline-online evaluation frameworks to track data drift and confidence scores, leveraging policy optimization to handle 3.5M records and \$14T in cash.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textit{Software Developer 2 - Associate} \hfill January 2025 -- July 2025
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item \textbf{Microservices \& Scale:} Architected a Java Spring Boot data framework and TTL Azure microservices, automating 1.5M+ client touchpoints and reducing infrastructure storage costs by 40\%.
+    \item \textbf{Distributed Caching:} Engineered a distributed read-through Ignite NoSQL cache with LRU eviction to address high-latency APIs, scaling concurrent requests and cutting response times from 450ms to 150ms.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textit{Software Developer 1 - Analyst} \hfill July 2022 -- December 2024
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item \textbf{Distributed Systems:} Resolved singleton bottlenecks by engineering a sharded server environment with Zookeeper leader election, distributing load and boosting system throughput to 10K+ RPS.
+    \item \textbf{SQL Optimization:} Achieved a 37\% reduction in PostgreSQL query latency on tables exceeding 50M+ rows by refactoring schemas and leveraging composite indexes for faster data retrieval.
+    \item \textbf{GenAI Integration:} Spearheaded the end-to-end development of a responsive UI, integrating Azure's LLM and machine learning APIs directly into the user workflow.
+    \item \textbf{Rigorous Testing \& DevOps:} Built comprehensive Azure DevOps CI/CD pipelines with integrated JUnit testing suites for robust validation, reducing deployment time-to-market by 40\%.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textit{Software Developer Internship} \hfill January 2022 -- June 2022
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item \textbf{Application Modernization:} Re-architected monolithic Pearl/Tomcat applications into a modular Java REST environment and Angular UI, drastically reducing technical debt and deployment time.
+\end{itemize}
+
+\vspace{-5pt}
+\section{Projects}
+\noindent
+\textbf{High-Performance Modular Booking Architecture}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Engineered a decoupled microservices architecture using Apache Kafka, seamlessly handling bursts of 100,000+ real-time requests with minimal latency spikes and containerized Docker deployments.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textbf{Zulip Open-Source GenAI Extensions}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Built a high-throughput message engine using Tornado, Redis, and RabbitMQ to process live data streams into concise LLM-based summaries with zero message loss and optimized API token usage.
+\end{itemize}
+
+\end{document}

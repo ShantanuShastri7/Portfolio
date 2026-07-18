@@ -7,28 +7,50 @@ import { getTechData } from '../../utils/icons';
 
 const experiences = [
     {
+        role: 'AI Engineer Intern',
+        company: 'BlackRock',
+        location: 'Gurgaon, India',
+        type: 'Internship',
+        date: 'June 2026 - Aug 2026',
+        duration: '3 months',
+        description: 'Building a Multi-Agent system to handle post-trade operations, creating a semantic layer using Protobuf and event sourcing via Apache Kafka. Developing a hierarchical multi-agent system running on Knowledge Graph RAG that creates patterns to identify and learn from user actions.',
+        skills: ['Python', 'Kafka', 'Neo4j', 'Milvus', 'Protobuf', 'LLM', 'RAG'],
+        projects: [
+            {
+                name: 'Multi-Agent Post-Trade System',
+                description: 'Built a Multi-Agent system to handle post-trade operations, creating a semantic layer using Protobuf and event sourcing via Apache Kafka.',
+                tech: ['Python', 'Apache Kafka', 'Protobuf', 'Multi-Agent Systems']
+            },
+            {
+                name: 'Hierarchical Knowledge Graph RAG',
+                description: 'Developing a hierarchical multi-agent system running on Knowledge Graph RAG that creates patterns to identify and learn from user actions.',
+                tech: ['LLM', 'RAG', 'Neo4j', 'Milvus']
+            }
+        ]
+    },
+    {
         role: 'Software Developer 2 - Associate',
         company: 'BlackRock',
         location: 'Gurgaon, India',
         type: 'Full-time',
         date: 'Jan 2025 - July 2025',
         duration: '7 months',
-        description: 'Designed a distributed microservices architecture for client agnostic bank routing configurations across 120+ global clients, automating 1.5+ million manual touchpoints.',
-        skills: ['Java', 'Springboot', 'Apache', 'Angular', 'SQL'],
+        description: 'Architected a central data framework and TTL Azure Blob microservices to resolve legacy bottlenecks, successfully automating 1.5M+ touchpoints across 117 clients. Engineered a distributed read-through Ignite cache to address high-latency APIs, cutting response times by 3x.',
+        skills: ['Java', 'Springboot', 'Apache', 'Angular', 'SQL', 'TypeScript'],
         projects: [
             {
                 name: 'Distributed Central Data Architecture',
-                description: 'Designed and implemented a central data architecture to manage routing configurations for the Aladdin platform. This system automated over 1.5 million manual touchpoints annually, significantly reducing operational toil and error rates. The architecture combined Azure Blob storage with MySQL to deliver a scalable and performant solution.',
-                tech: ['Java', 'Springboot', 'MySQL', 'Azure Blob Storage', 'Apache Kafka', 'gRPC']
+                description: 'Architected a central data framework and TTL Azure Blob microservices to resolve legacy bottlenecks, successfully automating 1.5M+ touchpoints across 117 clients while significantly reducing infrastructure storage costs.',
+                tech: ['Java', 'Springboot', 'MySQL', 'Azure Blob Storage']
             },
             {
-                name: 'Micro-Front end based User Interface design + development',
-                description: 'Designed and implemented a micro frontend architecture for the Aladdin platform, allowing for independent deployment and updates of different dashboard widgets.',
-                tech: ['Angular', 'TypeScript', 'RxJS', 'UI Design', 'Figma']
+                name: 'Micro-Front end User Interfaces',
+                description: 'Designed and implemented a micro frontend architecture for the Aladdin platform, allowing for independent deployment and updates of different dashboard widgets using TypeScript and Angular.',
+                tech: ['Angular', 'TypeScript', 'RxJS', 'UI Design']
             },
             {
                 name: 'Async Caching Framework',
-                description: 'Orchestrated a distributed read-through cache using Apache Ignite to improve data retrieval performance for high-frequency trading applications. Achieved 99.9% cache hit ratio and reduced latency by 40%',
+                description: 'Engineered a distributed read-through Ignite cache to address high-latency APIs, cutting response times by 3x.',
                 tech: ['Java', 'Apache Ignite', 'gRPC', 'Distributed Caching']
             }
         ]
@@ -40,45 +62,28 @@ const experiences = [
         type: 'Full-time',
         date: 'July 2022 - Dec 2024',
         duration: '2 yr 6 mos',
-        description: 'Improve Real-Time trading platform performance by working on multiple projects to create scalable and distributed solutions using Java, SQL, C++, Zookeeper, Apache Kafka. Worked on critical financial market regulatory projects like the US T+1 market shift, ensuring BlackRock operations face 0 downtime. Analyzed BlackRock market data and performed feature engineering on 100+ data points to create a real-time recommendation system.',
-        skills: ['Java', 'SQL', 'gRPC', 'Apache', 'Python', 'Angular', 'TypeScript'],
+        description: 'Resolved critical singleton bottlenecks by engineering a sharded, multi-instance server environment with Zookeeper leader election, effectively distributing load and boosting system performance by 24%. Achieved 37% reduction in query latency by refactoring critical legacy database tables.',
+        skills: ['Java', 'SQL', 'Zookeeper', 'Apache', 'Python', 'Angular', 'TypeScript'],
         projects: [
             {
-                name: 'Horizontal scaling of Singleton servers using Apache Zookeeper',
-                description: 'Implemented a distributed server network using Singleton services that allowed horizontal scaling of servers using Apache Zookeeper. This allowed for better load balancing and improved system performance.',
-                tech: ['Java', 'Apache Zookeeper', 'gRPC', 'Distributed System', 'WebSocket Communication']
+                name: 'Horizontal scaling using Apache Zookeeper',
+                description: 'Resolved critical singleton bottlenecks by engineering a sharded, multi-instance server environment with Zookeeper leader election, effectively distributing load and boosting system performance by 24%.',
+                tech: ['Java', 'Apache Zookeeper', 'gRPC', 'Distributed System']
+            },
+            {
+                name: 'Database Optimization',
+                description: 'Achieved 37% reduction in query latency by refactoring critical legacy database tables and leveraging composite indexes for faster data retrieval, significantly improving user experiences for key workflows.',
+                tech: ['PostgreSQL', 'SQL', 'Database Optimization']
             },
             {
                 name: 'Real-time Recommendation System',
                 description: 'Developed a real-time recommendation system using Python and machine learning algorithms based on decision trees to analyze BlackRock market data and perform feature engineering on 100+ data points.',
-                tech: ['Python', 'Machine Learning', 'Feature Engineering', 'Real-time Recommendation System']
+                tech: ['Python', 'Machine Learning', 'Feature Engineering']
             },
             {
-                name: 'US T+1 Market Shift',
-                description: 'Worked on critical financial market regulatory projects like the US T+1 market shift, ensuring BlackRock operations face 0 downtime.',
-                tech: ['Java', 'SQL', 'gRPC', 'FIX protocol']
-            },
-            {
-                name: 'Improved user experience using Server-Sent Events',
-                description: 'Improved user experience using Server-Sent Events to provide real-time updates to users.',
-                tech: ['Java', 'WebSocket', 'Server-Sent Events', 'Angular', 'TypeScript', 'RxJS']
-            }
-        ]
-    },
-    {
-        role: 'Software Developer Internship',
-        company: 'BlackRock',
-        location: 'Remote',
-        type: 'Internship',
-        date: 'Jan 2022 - June 2022',
-        duration: '6 months',
-        description: 'Built micro frontend UI modules. Developed a caching framework for asynchronously storing static data.',
-        skills: ['Angular', 'Java', 'TypeScript', 'RxJS'],
-        projects: [
-            {
-                name: 'Async Caching Framework',
-                description: 'Developed a caching framework for asynchronously storing and retrieving static financial data, improving initial page load times by 30%.',
-                tech: ['Java', 'REST']
+                name: 'CI/CD Pipelines & DevOps',
+                description: 'Built comprehensive CI/CD pipelines using Azure DevOps, with integrated JUnit/Jacoco testing suites, reducing time-to-market by 40% while maintaining SONAR scores >90%.',
+                tech: ['Azure DevOps', 'CI/CD', 'JUnit', 'SonarQube']
             }
         ]
     },
@@ -89,8 +94,8 @@ const experiences = [
         type: 'Internship',
         date: 'June 2020 - Sep 2020',
         duration: '4 months',
-        description: 'Created automated workflow in Python to analyze childrens answer sheets using OpenCV.',
-        skills: ['Python', 'OpenCV', 'K-Means'],
+        description: 'Engineered GPU-accelerated PyTorch workflows on a Linux environment, building foundational tooling to reliably automate evaluations and reduce grading time by 90%.',
+        skills: ['Python', 'OpenCV', 'K-Means', 'PyTorch'],
         projects: [
             {
                 name: 'Automated Grading System',

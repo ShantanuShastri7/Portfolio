@@ -1,0 +1,81 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries\uppercase}{}{0pt}{}[\titlerule]
+\titlespacing*{\section}{0pt}{6pt}{4pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    \Huge \textbf{Shantanu Shastri} \\
+    \vspace{2pt}
+    \small shantanushastri70@gmail.com $|$ (412) 608-7945 $|$ \href{https://linkedin.com/in/shantanushastri}{linkedin.com/in/shantanushastri}
+\end{center}
+
+\vspace{-5pt}
+\section{Education}
+\noindent
+\textbf{Carnegie Mellon University} \hfill December 2026 \\
+Master of Information Systems Management \hfill GPA: 3.85 \\
+\textbf{Manipal Institute of Technology} \hfill August 2022 \\
+Bachelor of Electronics and Communications Engineering \hfill GPA: 3.99 \\
+\textit{Relevant Coursework:} Deep Learning, Generative AI Lab, LLM Applications, MLOps, System Design
+
+\vspace{-5pt}
+\section{Skills}
+\noindent
+\textbf{AI Platform \& MLOps:} Prompting, Evals, Model Integrations, Observability, MLflow, Docker, Prometheus \\
+\textbf{GenAI \& LLMs:} RAG, Vector Search, Semantic Routing, Fine-Tuning, Llama-3, GPT-4, OpenAI APIs \\
+\textbf{Languages \& Backend:} TypeScript, Node.js, Python, Java, FastAPI, RESTful APIs, Microservices \\
+\textbf{Infrastructure \& Data:} Apache Kafka (Data Pipelines), Milvus, Neo4j, PostgreSQL, Azure, CI/CD
+
+\vspace{-5pt}
+\section{Experience}
+\noindent
+\textbf{BlackRock} \hfill January 2022 -- August 2026 \\
+\textit{AI Engineer Internship} \hfill June 2026 -- August 2026
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item \textbf{AI Platform Primitives:} Engineered a GenAI multi-agent platform (RockAI ADK) providing shared primitives and APIs for model integrations, handling 2K+ peak RPS to safely scale AI capabilities.
+    \item \textbf{Evals \& Observability:} Created offline-online evaluation frameworks and release gates tracking data drift, latency, and confidence scores, utilizing observability to safely process 3.5M records.
+    \item \textbf{Context Management Pipeline:} Built a fault-tolerant vector-graph data pipeline (Milvus, Neo4j, Kafka) for real-time context management, enabling sub-100ms structured search and improving latency.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textit{Software Developer 2 - Associate} \hfill January 2025 -- July 2025
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item \textbf{LLM Fine-tuning \& Integration:} Engineered a TypeScript micro-frontend translating natural language into JQL, fine-tuning LLMs (LoRA) on a 40K+ corpus to achieve a 94\% Exact Match quality measurement.
+    \item \textbf{Retrieval-Augmented Generation:} Implemented RAG using Milvus vector stores and Cohere semantic reranking to optimize context management, cutting query formulation time by 91\%.
+    \item \textbf{System Debugging \& Latency:} Engineered a distributed read-through cache with LRU eviction to debug and address high-latency APIs, cutting response times from 450ms to 150ms with minimal disruption.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textit{Software Developer 1 - Analyst} \hfill July 2022 -- December 2024
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item \textbf{MLOps \& Serving Infrastructure:} Built scalable MLOps and serving infrastructure using FastAPI and Docker for predictive modeling systems, achieving 88\% precision and reducing manual intervention by 60\%.
+    \item \textbf{Data Processing Pipelines:} Orchestrated large-scale data processing pipelines to clean multi-terabyte transactional datasets, uncovering latent patterns that optimized downstream system efficiency.
+    \item \textbf{Reliability Gates \& CI/CD:} Built comprehensive Azure DevOps pipelines with integrated quality gates and JUnit testing suites, ensuring high reliability and reducing deployment time-to-market by 40\%.
+\end{itemize}
+
+\vspace{-5pt}
+\section{Projects}
+\noindent
+\textbf{Zulip Open-Source GenAI Extensions}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Designed an LLM-backed Topic Drift Detection system to correct conversation titles in real-time, heavily optimizing cost/performance tradeoffs and minimizing API token usage.
+    \item Built a high-throughput message engine using Node.js and Redis to process live data streams into concise summaries, utilizing clear quality and reliability gates to prevent message loss.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textbf{Production Recommendation \& MLOps System}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Developed a robust MLOps platform featuring a 4-hour retraining loop, zero-downtime model serving, and extensive operational observability via Prometheus and Grafana dashboards.
+\end{itemize}
+
+\end{document}

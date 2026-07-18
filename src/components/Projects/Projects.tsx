@@ -5,6 +5,33 @@ import { getTechData } from '../../utils/icons';
 
 const projects = [
     {
+        title: 'Modular Booking Architecture',
+        subtitle: 'High-Performance Backend',
+        duration: 'Dec 2025',
+        description: 'Engineered a decoupled microservices architecture using Apache Kafka, successfully handling bursts of 100,000+ real-time requests with minimal latency spikes. Containerized with Docker for horizontal scaling.',
+        tags: ['Apache Kafka', 'Microservices', 'Docker', 'Distributed Systems', 'Java'],
+        github: 'https://github.com/ShantanuShastri7',
+        dates: { start: 'Nov 2025', end: 'Dec 2025' }
+    },
+    {
+        title: 'Zulip GenAI Extensions',
+        subtitle: 'Open-Source AI Integration',
+        duration: 'Jan 2026',
+        description: 'Extended the Zulip platform by building a Message Recap engine using Tornado, Redis, and RabbitMQ. Leveraged Large Language Models (LLMs) to synthesize unread streams into concise, clickable summaries.',
+        tags: ['Python', 'Tornado', 'Redis', 'RabbitMQ', 'LLM', 'Generative AI'],
+        github: 'https://github.com/ShantanuShastri7',
+        dates: { start: 'Dec 2025', end: 'Jan 2026' }
+    },
+    {
+        title: 'FinTech Recommendation System',
+        subtitle: 'MLOps & Serving',
+        duration: 'May 2026',
+        description: 'Developed a hybrid recommender using LightFM and SVD++ (722 recs/s throughput) with Llama-3-based cold-start logic. Built a 4-hour retraining loop with zero-downtime model reloading tracked via MLflow.',
+        tags: ['Python', 'Machine Learning', 'MLflow', 'Docker', 'Prometheus', 'Grafana', 'LLM'],
+        github: 'https://github.com/ShantanuShastri7',
+        dates: { start: 'Mar 2026', end: 'May 2026' }
+    },
+    {
         title: 'Running Coach Agent',
         subtitle: 'AI Agent / GCP Serverless',
         duration: 'May 2026',

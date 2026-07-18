@@ -7,7 +7,8 @@ const navItems = [
     { label: 'Education', href: '/#education' },
     { label: 'Projects', href: '/#projects' },
     { label: 'Blogs', href: '/#blog' },
-    { label: 'Resume', href: '/resume.pdf' },
+    { label: 'SWE Resume', href: '/swe_resume.pdf' },
+    { label: 'MLE Resume', href: '/mle_resume.pdf' },
     { label: 'Contact', href: '/#contact' },
 ];
 

@@ -60,7 +60,10 @@ export default function Hero() {
                         <Link href="mailto:shantanushastri70@gmail.com">
                             <Mail className={styles.socialIcon} />
                         </Link>
-                        <Link href="/resume.pdf" target="_blank">
+                        <Link href="/swe_resume.pdf" target="_blank" title="SWE Resume">
+                            <FileText className={styles.socialIcon} />
+                        </Link>
+                        <Link href="/mle_resume.pdf" target="_blank" title="MLE Resume">
                             <FileText className={styles.socialIcon} />
                         </Link>
                     </div>
