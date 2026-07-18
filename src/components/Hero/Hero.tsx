@@ -7,7 +7,7 @@ import styles from './Hero.module.css';
 
 const ROLES = [
     "Software Engineer",
-    "AI Researcher",
+    "Multi-Agent AI Systems developer",
     "Distributed Systems enthusiast",
     "Runner",
     "Coffee enthusiast",
